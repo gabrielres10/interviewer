@@ -54,9 +54,9 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleValidationExceptions(ex);
 
         // Assert
-        assertNotNull(response);
-        assertEquals(400, response.getStatusCode());
-        assertEquals("questionText: must not be blank", response.getMessage());
+        assertNotNull(response, "ErrorResponse should not be null");
+        assertEquals(400, response.getStatusCode(), "Status code should be 400 BAD_REQUEST");
+        assertEquals("questionText: must not be blank", response.getMessage(), "Error message should contain field validation error");
     }
 
     @Test
@@ -76,8 +76,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleValidationExceptions(ex);
 
         // Assert
-        assertEquals(400, response.getStatusCode());
-        assertEquals("field1: error1", response.getMessage());
+        assertEquals(400, response.getStatusCode(), "Status code should be 400 BAD_REQUEST for multiple validation errors");
+        assertEquals("field1: error1", response.getMessage(), "Error message should contain first field error");
     }
 
     @Test
@@ -94,8 +94,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleValidationExceptions(ex);
 
         // Assert
-        assertEquals(400, response.getStatusCode());
-        assertEquals("Invalid request", response.getMessage());
+        assertEquals(400, response.getStatusCode(), "Status code should be 400 BAD_REQUEST when no field errors");
+        assertEquals("Invalid request", response.getMessage(), "Should return default message when no field errors");
     }
 
     @Test
@@ -109,9 +109,9 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleHttpMessageNotReadable(ex);
 
         // Assert
-        assertNotNull(response);
-        assertEquals(400, response.getStatusCode());
-        assertNotNull(response.getMessage());
+        assertNotNull(response, "ErrorResponse should not be null for HttpMessageNotReadableException");
+        assertEquals(400, response.getStatusCode(), "Status code should be 400 BAD_REQUEST for unreadable message");
+        assertNotNull(response.getMessage(), "Error message should not be null");
     }
 
     @Test
@@ -123,8 +123,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleNotFound(ex);
 
         // Assert
-        assertEquals(404, response.getStatusCode());
-        assertEquals("Question with id 123 was not found", response.getMessage());
+        assertEquals(404, response.getStatusCode(), "Status code should be 404 NOT_FOUND for QuestionNotFoundException");
+        assertEquals("Question with id 123 was not found", response.getMessage(), "Error message should indicate question not found with specific ID");
     }
 
     @Test
@@ -136,8 +136,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleNotFound(ex);
 
         // Assert
-        assertEquals(404, response.getStatusCode());
-        assertEquals("Topic not found with ID: 456", response.getMessage());
+        assertEquals(404, response.getStatusCode(), "Status code should be 404 NOT_FOUND for TopicNotFoundException");
+        assertEquals("Topic not found with ID: 456", response.getMessage(), "Error message should indicate topic not found with specific ID");
     }
 
     @Test
@@ -149,8 +149,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleNotFound(ex);
 
         // Assert
-        assertEquals(404, response.getStatusCode());
-        assertEquals("Resource not found", response.getMessage());
+        assertEquals(404, response.getStatusCode(), "Status code should be 404 NOT_FOUND for ResourceNotFoundException");
+        assertEquals("Resource not found", response.getMessage(), "Error message should indicate resource not found");
     }
 
     @Test
@@ -162,8 +162,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleInvalidInput(ex);
 
         // Assert
-        assertEquals(400, response.getStatusCode());
-        assertEquals("Question ID must be a positive number", response.getMessage());
+        assertEquals(400, response.getStatusCode(), "Status code should be 400 BAD_REQUEST for InvalidQuestionException");
+        assertEquals("Question ID must be a positive number", response.getMessage(), "Error message should indicate invalid question ID");
     }
 
     @Test
@@ -175,8 +175,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleInvalidInput(ex);
 
         // Assert
-        assertEquals(400, response.getStatusCode());
-        assertEquals("Topic ID must be a positive number", response.getMessage());
+        assertEquals(400, response.getStatusCode(), "Status code should be 400 BAD_REQUEST for InvalidTopicException");
+        assertEquals("Topic ID must be a positive number", response.getMessage(), "Error message should indicate invalid topic ID");
     }
 
     @Test
@@ -188,8 +188,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleInvalidInput(ex);
 
         // Assert
-        assertEquals(400, response.getStatusCode());
-        assertEquals("Invalid input provided", response.getMessage());
+        assertEquals(400, response.getStatusCode(), "Status code should be 400 BAD_REQUEST for InvalidInputException");
+        assertEquals("Invalid input provided", response.getMessage(), "Error message should indicate invalid input");
     }
 
     @Test
@@ -201,8 +201,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleConflict(ex);
 
         // Assert
-        assertEquals(409, response.getStatusCode());
-        assertEquals("A question with the same text already exists", response.getMessage());
+        assertEquals(409, response.getStatusCode(), "Status code should be 409 CONFLICT for DuplicateQuestionException");
+        assertEquals("A question with the same text already exists", response.getMessage(), "Error message should indicate duplicate question");
     }
 
     @Test
@@ -214,8 +214,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleConflict(ex);
 
         // Assert
-        assertEquals(409, response.getStatusCode());
-        assertEquals("A topic with the same name already exists", response.getMessage());
+        assertEquals(409, response.getStatusCode(), "Status code should be 409 CONFLICT for DuplicateTopicException");
+        assertEquals("A topic with the same name already exists", response.getMessage(), "Error message should indicate duplicate topic");
     }
 
     @Test
@@ -227,8 +227,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleConflict(ex);
 
         // Assert
-        assertEquals(409, response.getStatusCode());
-        assertEquals("Conflict detected", response.getMessage());
+        assertEquals(409, response.getStatusCode(), "Status code should be 409 CONFLICT for ConflictException");
+        assertEquals("Conflict detected", response.getMessage(), "Error message should indicate conflict detected");
     }
 
     @Test
@@ -240,8 +240,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleBusinessRuleViolation(ex);
 
         // Assert
-        assertEquals(422, response.getStatusCode());
-        assertEquals("Question cannot be deleted because it is referenced", response.getMessage());
+        assertEquals(422, response.getStatusCode(), "Status code should be 422 UNPROCESSABLE_CONTENT for QuestionCannotBeDeletedException");
+        assertEquals("Question cannot be deleted because it is referenced", response.getMessage(), "Error message should indicate question cannot be deleted");
     }
 
     @Test
@@ -253,8 +253,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleBusinessRuleViolation(ex);
 
         // Assert
-        assertEquals(422, response.getStatusCode());
-        assertEquals("Business rule violated", response.getMessage());
+        assertEquals(422, response.getStatusCode(), "Status code should be 422 UNPROCESSABLE_CONTENT for BusinessRuleViolationException");
+        assertEquals("Business rule violated", response.getMessage(), "Error message should indicate business rule violation");
     }
 
     @Test
@@ -266,8 +266,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleDefaultException(ex);
 
         // Assert
-        assertEquals(500, response.getStatusCode());
-        assertEquals("Unexpected error occurred", response.getMessage());
+        assertEquals(500, response.getStatusCode(), "Status code should be 500 INTERNAL_SERVER_ERROR for generic Exception");
+        assertEquals("Unexpected error occurred", response.getMessage(), "Error message should indicate unexpected error");
     }
 
     @Test
@@ -279,8 +279,8 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleDefaultException(ex);
 
         // Assert
-        assertEquals(500, response.getStatusCode());
-        assertEquals("Runtime error", response.getMessage());
+        assertEquals(500, response.getStatusCode(), "Status code should be 500 INTERNAL_SERVER_ERROR for RuntimeException");
+        assertEquals("Runtime error", response.getMessage(), "Error message should indicate runtime error");
     }
 
     @Test
@@ -292,17 +292,17 @@ public class GlobalExceptionHandlerTest {
         ErrorResponse response = globalExceptionHandler.handleDefaultException(ex);
 
         // Assert
-        assertEquals(500, response.getStatusCode());
-        assertEquals("Null pointer", response.getMessage());
+        assertEquals(500, response.getStatusCode(), "Status code should be 500 INTERNAL_SERVER_ERROR for NullPointerException");
+        assertEquals("Null pointer", response.getMessage(), "Error message should indicate null pointer");
     }
 
     @Test
     void errorResponse_shouldHaveCorrectHttpStatusValues() {
         // Assert
-        assertEquals(400, HttpStatus.BAD_REQUEST.value());
-        assertEquals(404, HttpStatus.NOT_FOUND.value());
-        assertEquals(409, HttpStatus.CONFLICT.value());
-        assertEquals(422, HttpStatus.UNPROCESSABLE_CONTENT.value());
-        assertEquals(500, HttpStatus.INTERNAL_SERVER_ERROR.value());
+        assertEquals(400, HttpStatus.BAD_REQUEST.value(), "BAD_REQUEST should have value 400");
+        assertEquals(404, HttpStatus.NOT_FOUND.value(), "NOT_FOUND should have value 404");
+        assertEquals(409, HttpStatus.CONFLICT.value(), "CONFLICT should have value 409");
+        assertEquals(422, HttpStatus.UNPROCESSABLE_CONTENT.value(), "UNPROCESSABLE_CONTENT should have value 422");
+        assertEquals(500, HttpStatus.INTERNAL_SERVER_ERROR.value(), "INTERNAL_SERVER_ERROR should have value 500");
     }
 }

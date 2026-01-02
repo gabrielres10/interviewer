@@ -42,7 +42,7 @@ public class QuestionServiceTest {
 
         Question result = questionService.createQuestion(question);
 
-        assertNotNull(result);
+        assertNotNull(result, "Created question should not be null");
         verify(questionRepository).save(question);
     }
 
@@ -86,7 +86,7 @@ public class QuestionServiceTest {
 
         Question result = questionService.getQuestionById(1L);
 
-        assertEquals("What is Java?", result.getQuestionText());
+        assertEquals("What is Java?", result.getQuestionText(), "Question text should match the one retrieved from repository");
     }
 
     @Test
@@ -106,7 +106,7 @@ public class QuestionServiceTest {
 
         Question result = questionService.updateQuestion(1L, updated);
 
-        assertEquals("New text", result.getQuestionText());
+        assertEquals("New text", result.getQuestionText(), "Question text should be updated to 'New text'");
     }
 
     @Test

@@ -43,11 +43,11 @@ public class ObjectMapperTest {
 
         // Assert
         assertNotNull(result, "Mapped Question entity should not be null");
-        assertEquals("What is polymorphism?", result.getQuestionText());
-        assertEquals("Polymorphism is the ability of objects to take many forms", result.getAnswer());
-        assertEquals(Difficulty.MEDIUM, result.getDifficulty());
-        assertEquals(topic, result.getTopic());
-        assertEquals("Core Java", result.getTopic().getName());
+        assertEquals("What is polymorphism?", result.getQuestionText(), "Question text should be correctly mapped from DTO");
+        assertEquals("Polymorphism is the ability of objects to take many forms", result.getAnswer(), "Answer should be correctly mapped from DTO");
+        assertEquals(Difficulty.MEDIUM, result.getDifficulty(), "Difficulty should be MEDIUM as specified in DTO");
+        assertEquals(topic, result.getTopic(), "Topic should be the provided topic entity");
+        assertEquals("Core Java", result.getTopic().getName(), "Topic name should be 'Core Java'");
     }
 
     @Test
@@ -66,7 +66,7 @@ public class ObjectMapperTest {
         Question result = objectMapper.toQuestionEntity(dto, topic);
 
         // Assert
-        assertEquals(Difficulty.EASY, result.getDifficulty());
+        assertEquals(Difficulty.EASY, result.getDifficulty(), "Difficulty should be EASY as specified in DTO");
     }
 
     @Test
@@ -85,7 +85,7 @@ public class ObjectMapperTest {
         Question result = objectMapper.toQuestionEntity(dto, topic);
 
         // Assert
-        assertEquals(Difficulty.HARD, result.getDifficulty());
+        assertEquals(Difficulty.HARD, result.getDifficulty(), "Difficulty should be HARD as specified in DTO");
     }
 
     @Test
@@ -110,13 +110,13 @@ public class ObjectMapperTest {
 
         // Assert
         assertNotNull(result, "Mapped QuestionResponse DTO should not be null");
-        assertEquals(5L, result.getId());
-        assertEquals("What is encapsulation?", result.getQuestionText());
-        assertEquals("Encapsulation is the bundling of data with methods that operate on that data", result.getAnswer());
-        assertEquals("MEDIUM", result.getDifficulty());
+        assertEquals(5L, result.getId(), "Question ID should be correctly mapped to response");
+        assertEquals("What is encapsulation?", result.getQuestionText(), "Question text should be correctly mapped to response");
+        assertEquals("Encapsulation is the bundling of data with methods that operate on that data", result.getAnswer(), "Answer should be correctly mapped to response");
+        assertEquals("MEDIUM", result.getDifficulty(), "Difficulty should be mapped as string 'MEDIUM'");
         assertNotNull(result.getTopic(), "Topic in QuestionResponse should not be null");
-        assertEquals(1L, result.getTopic().getId());
-        assertEquals("Core Java", result.getTopic().getName());
+        assertEquals(1L, result.getTopic().getId(), "Topic ID should be correctly mapped");
+        assertEquals("Core Java", result.getTopic().getName(), "Topic name should be 'Core Java'");
     }
 
     @Test
@@ -136,9 +136,9 @@ public class ObjectMapperTest {
         QuestionResponse hardResponse = objectMapper.toQuestionResponse(hardQuestion);
 
         // Assert
-        assertEquals("EASY", easyResponse.getDifficulty());
-        assertEquals("MEDIUM", mediumResponse.getDifficulty());
-        assertEquals("HARD", hardResponse.getDifficulty());
+        assertEquals("EASY", easyResponse.getDifficulty(), "EASY difficulty should be mapped as string 'EASY'");
+        assertEquals("MEDIUM", mediumResponse.getDifficulty(), "MEDIUM difficulty should be mapped as string 'MEDIUM'");
+        assertEquals("HARD", hardResponse.getDifficulty(), "HARD difficulty should be mapped as string 'HARD'");
     }
 
     @Test
@@ -152,9 +152,9 @@ public class ObjectMapperTest {
         TopicResponse result = objectMapper.toTopicResponse(topic);
 
         // Assert
-        assertNotNull(result);
-        assertEquals(10L, result.getId());
-        assertEquals("ES6 Features", result.getName());
+        assertNotNull(result, "Mapped TopicResponse should not be null");
+        assertEquals(10L, result.getId(), "Topic ID should be correctly mapped");
+        assertEquals("ES6 Features", result.getName(), "Topic name should be 'ES6 Features'");
     }
 
     @Test
@@ -168,9 +168,9 @@ public class ObjectMapperTest {
         TopicResponse result = objectMapper.toTopicResponse(topic);
 
         // Assert
-        assertNotNull(result);
-        assertEquals(null, result.getId());
-        assertEquals("Django", result.getName());
+        assertNotNull(result, "Mapped TopicResponse should not be null even with null ID");
+        assertEquals(null, result.getId(), "Topic ID should be null when not set");
+        assertEquals("Django", result.getName(), "Topic name should be 'Django'");
     }
 
     @Test
@@ -194,9 +194,9 @@ public class ObjectMapperTest {
         QuestionResponse result = objectMapper.toQuestionResponse(question);
 
         // Assert
-        assertEquals(100L, result.getId());
-        assertEquals(15L, result.getTopic().getId());
-        assertEquals("STL", result.getTopic().getName());
+        assertEquals(100L, result.getId(), "Question ID should be 100");
+        assertEquals(15L, result.getTopic().getId(), "Topic ID should be 15");
+        assertEquals("STL", result.getTopic().getName(), "Topic name should be 'STL'");
     }
 
     @Test
@@ -221,8 +221,8 @@ public class ObjectMapperTest {
         Question result = objectMapper.toQuestionEntity(dto, topic);
 
         // Assert
-        assertEquals(longQuestionText, result.getQuestionText());
-        assertEquals(longAnswer, result.getAnswer());
-        assertEquals(Difficulty.HARD, result.getDifficulty());
+        assertEquals(longQuestionText, result.getQuestionText(), "Long question text should be preserved exactly");
+        assertEquals(longAnswer, result.getAnswer(), "Long answer should be preserved exactly");
+        assertEquals(Difficulty.HARD, result.getDifficulty(), "Difficulty should be HARD");
     }
 }

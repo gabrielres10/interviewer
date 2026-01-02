@@ -48,7 +48,7 @@ public class TopicServiceTest {
         Topic result = topicService.createTopic(topic);
 
         // Assert
-        assertNotNull(result);
+        assertNotNull(result, "Created topic should not be null");
         verify(topicRepository).save(topic);
     }
 
@@ -78,8 +78,8 @@ public class TopicServiceTest {
         Topic result = topicService.getTopicById(1L);
 
         // Assert
-        assertEquals("Core Java", result.getName());
-        assertEquals(1L, result.getId());
+        assertEquals("Core Java", result.getName(), "Topic name should be 'Core Java'");
+        assertEquals(1L, result.getId(), "Topic ID should be 1");
     }
 
     @Test
@@ -122,7 +122,7 @@ public class TopicServiceTest {
         List<Topic> result = topicService.getAllTopics();
 
         // Assert
-        assertEquals(2, result.size());
+        assertEquals(2, result.size(), "Should return 2 topics");
         verify(topicRepository).findAll();
     }
 
@@ -135,7 +135,7 @@ public class TopicServiceTest {
         List<Topic> result = topicService.getAllTopics();
 
         // Assert
-        assertEquals(0, result.size());
+        assertEquals(0, result.size(), "Should return empty list when no topics exist");
     }
 
     @Test
@@ -155,7 +155,7 @@ public class TopicServiceTest {
         Topic result = topicService.updateTopic(1L, updated);
 
         // Assert
-        assertEquals("New Name", result.getName());
+        assertEquals("New Name", result.getName(), "Topic name should be updated to 'New Name'");
         verify(topicRepository).save(existing);
     }
 
@@ -175,7 +175,7 @@ public class TopicServiceTest {
         Topic result = topicService.updateTopic(1L, updated);
 
         // Assert
-        assertEquals("Same Name", result.getName());
+        assertEquals("Same Name", result.getName(), "Topic name should remain 'Same Name'");
         verify(topicRepository, never()).existsByName(any());
         verify(topicRepository).save(existing);
     }
